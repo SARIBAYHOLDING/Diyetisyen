@@ -4,17 +4,21 @@ import DietBuilderModal from './DietBuilderModal';
 import PatientNotesModal from './PatientNotesModal';
 import StickyNotes from './StickyNotes';
 import CreateClientModal from '../common/CreateClientModal';
+import CreateAppointmentModal from './CreateAppointmentModal';
+import ClientMessageModal from '../client/ClientMessageModal';
 import { exportToExcel } from '../../utils/exportHelpers';
 import { BRAND_CONFIG } from '../../config/brandConfig';
-import { Stethoscope, Users, Calendar, FileText, Utensils, Search, UserPlus, Download, CheckCircle, Clock } from 'lucide-react';
+import { Stethoscope, Users, Calendar, FileText, Utensils, Search, UserPlus, Download, CheckCircle, Clock, MessageSquare, Plus, Trash2, Check, XCircle } from 'lucide-react';
 
 export default function DietitianDashboard() {
-  const { clients, appointments, currentUser, changeRequests, updateChangeRequestStatus } = useAuth();
+  const { clients, appointments, currentUser, changeRequests, updateChangeRequestStatus, updateAppointmentStatus, deleteAppointment } = useAuth();
   const [activeTab, setActiveTab] = useState('clients');
   const [selectedClient, setSelectedClient] = useState(null);
   const [isBuilderOpen, setIsBuilderOpen] = useState(false);
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isCreateClientOpen, setIsCreateClientOpen] = useState(false);
+  const [isCreateAppointmentOpen, setIsCreateAppointmentOpen] = useState(false);
+  const [isMessageOpen, setIsMessageOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredClients = clients.filter(c =>
@@ -35,6 +39,37 @@ export default function DietitianDashboard() {
       "Durum": c.status
     }));
     exportToExcel(exportData, "Danisanlar_Listesi", "Danışan Müşteri Listesi");
+  };
+
+  const handleExportClientsPdf = () => {
+    const rowsHtml = clients.map(c => `
+      <tr>
+        <td><strong>${c.name}</strong><br><span style="color: #64748b;">${c.email}</span></td>
+        <td>${c.package}</td>
+        <td>${c.assignedDietitianName}</td>
+        <td><strong>${c.startWeight} → ${c.currentWeight} kg</strong> (Hedef: ${c.targetWeight}kg)</td>
+        <td><span style="background: #ecfdf5; color: #047857; padding: 3px 8px; border-radius: 10px; font-weight: bold;">${c.status}</span></td>
+      </tr>
+    `).join('');
+
+    const tableHtml = `
+      <table>
+        <thead>
+          <tr>
+            <th>Danışan Müşteri</th>
+            <th>Paket Türü</th>
+            <th>Sorumlu Diyetisyen</th>
+            <th>Kilo Durumu</th>
+            <th>Durum</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rowsHtml}
+        </tbody>
+      </table>
+    `;
+
+    exportToPdf("Danışan Müşteri Kadro Listesi", tableHtml, `Aktif Atanmış Toplam Müşteri: ${clients.length} Kişi`);
   };
 
   return (
@@ -72,6 +107,14 @@ export default function DietitianDashboard() {
           >
             <Download className="w-4 h-4 text-emerald-600" />
             <span>Excel İndir</span>
+          </button>
+
+          <button
+            onClick={handleExportClientsPdf}
+            className="px-4 py-2.5 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 text-xs font-bold flex items-center gap-1.5 transition-colors"
+          >
+            <FileText className="w-4 h-4 text-emerald-600" />
+            <span>PDF İndir</span>
           </button>
         </div>
       </div>
@@ -140,7 +183,7 @@ export default function DietitianDashboard() {
             {filteredClients.map((c) => (
               <div
                 key={c.id}
-                className="bg-white rounded-3xl p-6 border border-slate-200 hover:border-emerald-300 transition-all flex flex-col justify-between shadow-md"
+                className="bg-white rounded-3xl p-6 border border-slate-200 hover:border-emerald-300 transition-all flex flex-col justify-between shadow-md space-y-4"
               >
                 <div>
                   <div className="flex items-start justify-between mb-4">
@@ -178,16 +221,16 @@ export default function DietitianDashboard() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100">
+                <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100">
                   <button
                     onClick={() => {
                       setSelectedClient(c);
                       setIsBuilderOpen(true);
                     }}
-                    className="py-2.5 rounded-xl bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-300 text-xs font-bold flex items-center justify-center gap-1.5"
+                    className="py-2.5 rounded-xl bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-300 text-[11px] font-bold flex items-center justify-center gap-1"
                   >
                     <Utensils className="w-3.5 h-3.5" />
-                    <span>Diyetini Düzenle</span>
+                    <span>Diyet</span>
                   </button>
 
                   <button
@@ -195,10 +238,21 @@ export default function DietitianDashboard() {
                       setSelectedClient(c);
                       setIsNotesOpen(true);
                     }}
-                    className="py-2.5 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 text-xs font-bold flex items-center justify-center gap-1.5"
+                    className="py-2.5 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 text-[11px] font-bold flex items-center justify-center gap-1"
                   >
                     <FileText className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>Klinik Notlar</span>
+                    <span>Notlar</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setSelectedClient(c);
+                      setIsMessageOpen(true);
+                    }}
+                    className="py-2.5 rounded-xl bg-teal-50 text-teal-800 hover:bg-teal-100 border border-teal-200 text-[11px] font-bold flex items-center justify-center gap-1"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5 text-teal-600" />
+                    <span>Mesaj</span>
                   </button>
                 </div>
               </div>
@@ -261,23 +315,73 @@ export default function DietitianDashboard() {
 
       {/* 4. APPOINTMENTS TAB */}
       {activeTab === 'appointments' && (
-        <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-md space-y-4">
-          <h3 className="text-base font-bold text-slate-900 mb-2">Randevu Takip Ekranı</h3>
+        <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-md space-y-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-base font-bold text-slate-900">Randevu Takip Ekranı</h3>
+              <p className="text-xs text-slate-500">Planlanan Danışan Görüşmeleri ve Randevu Durumları</p>
+            </div>
+
+            <button
+              onClick={() => setIsCreateAppointmentOpen(true)}
+              className="gradient-btn-emerald px-4 py-2 rounded-xl text-xs font-extrabold flex items-center gap-2 shadow-md"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Yeni Randevu Ekle</span>
+            </button>
+          </div>
+
           <div className="space-y-3">
-            {appointments.map((apt) => (
-              <div
-                key={apt.id}
-                className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between"
-              >
-                <div>
-                  <h4 className="text-xs font-bold text-slate-900">{apt.clientName}</h4>
-                  <p className="text-[11px] text-slate-500 font-medium">{apt.date} - {apt.time} ({apt.type})</p>
+            {appointments.length === 0 ? (
+              <p className="text-xs text-slate-500 italic">Kayıtlı randevu bulunmuyor.</p>
+            ) : (
+              appointments.map((apt) => (
+                <div
+                  key={apt.id}
+                  className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                >
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-100 border border-emerald-300 flex items-center justify-center text-emerald-700 shrink-0">
+                      <Calendar className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-900">{apt.clientName}</h4>
+                      <p className="text-[11px] text-slate-500 font-medium">
+                        {apt.date} - Saat {apt.time} • <strong className="text-emerald-700">{apt.type}</strong>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className={`px-3 py-1 rounded-full text-xs font-bold border ${
+                      apt.status === 'Onaylandı' ? 'bg-emerald-100 text-emerald-800 border-emerald-300' :
+                      apt.status === 'Tamamlandı' ? 'bg-indigo-100 text-indigo-800 border-indigo-300' :
+                      'bg-amber-100 text-amber-800 border-amber-300'
+                    }`}>
+                      {apt.status}
+                    </span>
+
+                    {apt.status !== 'Tamamlandı' && (
+                      <button
+                        onClick={() => updateAppointmentStatus(apt.id, 'Tamamlandı')}
+                        title="Tamamlandı İşaretle"
+                        className="p-2 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 transition-colors"
+                      >
+                        <Check className="w-4 h-4" />
+                      </button>
+                    )}
+
+                    <button
+                      onClick={() => deleteAppointment(apt.id)}
+                      title="Randevuyu Sil"
+                      className="p-2 rounded-xl bg-rose-50 text-rose-600 hover:bg-rose-100 border border-rose-200 transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
-                <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-300">
-                  {apt.status}
-                </span>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       )}
@@ -303,6 +407,17 @@ export default function DietitianDashboard() {
       <CreateClientModal
         isOpen={isCreateClientOpen}
         onClose={() => setIsCreateClientOpen(false)}
+      />
+
+      <CreateAppointmentModal
+        isOpen={isCreateAppointmentOpen}
+        onClose={() => setIsCreateAppointmentOpen(false)}
+      />
+
+      <ClientMessageModal
+        isOpen={isMessageOpen}
+        onClose={() => setIsMessageOpen(false)}
+        client={selectedClient}
       />
     </div>
   );

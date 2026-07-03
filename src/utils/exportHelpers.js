@@ -46,14 +46,11 @@ export function exportToExcel(data, fileName = "Rapor", title = "Veri Raporu") {
 }
 
 /**
- * Opens a branded PDF print window with Suda Dynamics watermark
+ * Generates an automatic downloadable PDF/HTML document file directly without print window
  */
 export function exportToPdf(title, contentHtml, subtitle = "") {
-  const printWindow = window.open("", "_blank", "width=900,height=800");
-  if (!printWindow) {
-    alert("Lütfen tarayıcı açılır pencere (pop-up) engelleyicisini kapatın.");
-    return;
-  }
+  const sanitizedTitle = title.replace(/[^a-zA-Z0-9çğıöşüÇĞİÖŞÜ]/g, '_');
+  const fileName = `${sanitizedTitle}_Raporu`;
 
   const html = `
     <!DOCTYPE html>
@@ -139,48 +136,43 @@ export function exportToPdf(title, contentHtml, subtitle = "") {
           border-radius: 20px;
           border: 1px solid #a7f3d0;
         }
-        @media print {
-          body { padding: 0; }
-          .no-print { display: none; }
-        }
       </style>
     </head>
     <body>
-      <div className="header">
+      <div class="header">
         <div>
-          <div className="brand-title">🌿 ${BRAND_CONFIG.name}</div>
-          <div className="brand-tagline">${BRAND_CONFIG.tagline}</div>
+          <div class="brand-title">🌿 ${BRAND_CONFIG.name}</div>
+          <div class="brand-tagline">${BRAND_CONFIG.tagline}</div>
         </div>
         <div style="text-align: right; font-size: 11px; color: #64748b;">
-          <div><strong>Tarih:</strong> ${new Date().toLocaleDateString('tr-TR')}</div>
+          <div><strong>Tarih:</strong> ${new Date().toLocaleDateString('tr-TR')} ${new Date().toLocaleTimeString('tr-TR')}</div>
           <div><strong>Tel:</strong> ${BRAND_CONFIG.phone}</div>
         </div>
       </div>
 
-      <div className="doc-title">${title}</div>
-      ${subtitle ? `<div className="doc-subtitle">${subtitle}</div>` : ''}
+      <div class="doc-title">${title}</div>
+      ${subtitle ? `<div class="doc-subtitle">${subtitle}</div>` : ''}
 
-      <div className="content">
+      <div class="content">
         ${contentHtml}
       </div>
 
-      <div className="footer">
+      <div class="footer">
         <div>© ${new Date().getFullYear()} ${BRAND_CONFIG.name} Klinik ve Beslenme Portalı</div>
-        <div className="footprint-badge">⚡ ${BRAND_CONFIG.footprint}</div>
+        <div class="footprint-badge">⚡ ${BRAND_CONFIG.footprint}</div>
       </div>
-
-      <script>
-        window.onload = function() {
-          setTimeout(function() {
-            window.print();
-          }, 400);
-        };
-      </script>
     </body>
     </html>
   `;
 
-  printWindow.document.open();
-  printWindow.document.write(html);
-  printWindow.document.close();
+  // Automatic file download trigger without window.print()
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", `${fileName}_${Date.now()}.pdf.html`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
 }

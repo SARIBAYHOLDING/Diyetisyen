@@ -29,7 +29,17 @@ export function AuthProvider({ children }) {
   // Database Collections
   const [clients, setClients] = useState(() => {
     const saved = localStorage.getItem('nutrivibe_clients');
-    return saved ? JSON.parse(saved) : INITIAL_CLIENTS;
+    if (saved) return JSON.parse(saved);
+    // Enrich initial clients with weightHistory if missing
+    return INITIAL_CLIENTS.map(c => ({
+      weightHistory: [
+        { date: '1. Hafta', weight: c.startWeight, fat: (c.bodyFatPercent + 2.8).toFixed(1) },
+        { date: '2. Hafta', weight: (c.startWeight - 2.3).toFixed(1), fat: (c.bodyFatPercent + 1.6).toFixed(1) },
+        { date: '3. Hafta', weight: (c.startWeight - 4.5).toFixed(1), fat: (c.bodyFatPercent + 0.7).toFixed(1) },
+        { date: '4. Hafta', weight: c.currentWeight, fat: c.bodyFatPercent }
+      ],
+      ...c
+    }));
   });
 
   const [dietitians, setDietitians] = useState(() => {
@@ -37,17 +47,57 @@ export function AuthProvider({ children }) {
     return saved ? JSON.parse(saved) : INITIAL_DIETITIANS;
   });
 
-  const [dietPlans, setDietPlans] = useState(INITIAL_DIET_PLANS);
-  const [changeRequests, setChangeRequests] = useState(INITIAL_CHANGE_REQUESTS);
+  const [dietPlans, setDietPlans] = useState(() => {
+    const saved = localStorage.getItem('nutrivibe_dietPlans');
+    return saved ? JSON.parse(saved) : INITIAL_DIET_PLANS;
+  });
+
+  const [changeRequests, setChangeRequests] = useState(() => {
+    const saved = localStorage.getItem('nutrivibe_changeRequests');
+    return saved ? JSON.parse(saved) : INITIAL_CHANGE_REQUESTS;
+  });
 
   const [payments, setPayments] = useState(() => {
     const saved = localStorage.getItem('nutrivibe_payments');
     return saved ? JSON.parse(saved) : INITIAL_PAYMENTS;
   });
 
-  const [appointments, setAppointments] = useState(INITIAL_APPOINTMENTS);
-  const [stickyNotes, setStickyNotes] = useState(INITIAL_STICKY_NOTES);
-  const [motivationQuotes, setMotivationQuotes] = useState(MOTIVATION_QUOTES);
+  const [appointments, setAppointments] = useState(() => {
+    const saved = localStorage.getItem('nutrivibe_appointments');
+    return saved ? JSON.parse(saved) : INITIAL_APPOINTMENTS;
+  });
+
+  const [stickyNotes, setStickyNotes] = useState(() => {
+    const saved = localStorage.getItem('nutrivibe_stickyNotes');
+    return saved ? JSON.parse(saved) : INITIAL_STICKY_NOTES;
+  });
+
+  const [motivationQuotes, setMotivationQuotes] = useState(() => {
+    const saved = localStorage.getItem('nutrivibe_motivationQuotes');
+    return saved ? JSON.parse(saved) : MOTIVATION_QUOTES;
+  });
+
+  const [messages, setMessages] = useState(() => {
+    const saved = localStorage.getItem('nutrivibe_messages');
+    return saved ? JSON.parse(saved) : [
+      {
+        id: "msg-1",
+        senderRole: "dietitian",
+        senderName: "Dyt. Zeynep Kaya",
+        receiverId: "c-101",
+        text: "Merhaba Ahsen Hanım, bu haftaki su tüketiminizi harika artırmışsınız! Tebrik ederim.",
+        timestamp: "2026-07-03 10:15"
+      },
+      {
+        id: "msg-2",
+        senderRole: "client",
+        senderName: "Ahsen Yılmaz",
+        receiverId: "c-101",
+        text: "Çok teşekkür ederim Zeynep Hanım! Yeşil çay desteği ile ödemlerim de çok azaldı.",
+        timestamp: "2026-07-03 11:30"
+      }
+    ];
+  });
 
   // Motivation system settings
   const [motivationEnabled, setMotivationEnabled] = useState(true);
@@ -75,6 +125,30 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     localStorage.setItem('nutrivibe_dietitians', JSON.stringify(dietitians));
   }, [dietitians]);
+
+  useEffect(() => {
+    localStorage.setItem('nutrivibe_dietPlans', JSON.stringify(dietPlans));
+  }, [dietPlans]);
+
+  useEffect(() => {
+    localStorage.setItem('nutrivibe_changeRequests', JSON.stringify(changeRequests));
+  }, [changeRequests]);
+
+  useEffect(() => {
+    localStorage.setItem('nutrivibe_appointments', JSON.stringify(appointments));
+  }, [appointments]);
+
+  useEffect(() => {
+    localStorage.setItem('nutrivibe_stickyNotes', JSON.stringify(stickyNotes));
+  }, [stickyNotes]);
+
+  useEffect(() => {
+    localStorage.setItem('nutrivibe_motivationQuotes', JSON.stringify(motivationQuotes));
+  }, [motivationQuotes]);
+
+  useEffect(() => {
+    localStorage.setItem('nutrivibe_messages', JSON.stringify(messages));
+  }, [messages]);
 
   // 1-Click Preset Demo Role Switcher
   const loginAs = (targetRole) => {
@@ -135,20 +209,26 @@ export function AuthProvider({ children }) {
     setCurrentUser(null);
   };
 
-  // CLIENT CRUD
+  // CLIENT CRUD & WEIGHT LOG
   const addClient = (newClientData) => {
     const newId = `c-${Date.now()}`;
+    const initialWeight = parseFloat(newClientData.startWeight) || 75;
+    const initialFat = parseFloat(newClientData.bodyFatPercent) || 25;
+
     const createdClient = {
       id: newId,
       status: 'Aktif',
       avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80',
-      bodyFatPercent: 25.0,
+      bodyFatPercent: initialFat,
       waterLevel: 58.0,
       waterIntakeGoal: 2500,
       waterIntakeCurrent: 0,
       startDate: new Date().toISOString().split('T')[0],
       endDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
       clinicalNotes: 'Yeni oluşturulan danışan hesabı.',
+      weightHistory: [
+        { date: 'Başlangıç', weight: initialWeight, fat: initialFat }
+      ],
       ...newClientData
     };
 
@@ -176,10 +256,41 @@ export function AuthProvider({ children }) {
 
   const updateClient = (id, updatedFields) => {
     setClients(prev => prev.map(c => c.id === id ? { ...c, ...updatedFields } : c));
+    if (currentUser && currentUser.id === id) {
+      setCurrentUser(prev => ({ ...prev, ...updatedFields }));
+    }
   };
 
   const deleteClient = (id) => {
     setClients(prev => prev.filter(c => c.id !== id));
+  };
+
+  const addWeightLog = (clientId, weight, fat, dateLabel) => {
+    const numericWeight = parseFloat(weight);
+    const numericFat = parseFloat(fat);
+    const label = dateLabel || new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'short' });
+
+    setClients(prev => prev.map(c => {
+      if (c.id === clientId) {
+        const updatedHistory = [...(c.weightHistory || []), { date: label, weight: numericWeight, fat: numericFat }];
+        return {
+          ...c,
+          currentWeight: numericWeight,
+          bodyFatPercent: numericFat,
+          weightHistory: updatedHistory
+        };
+      }
+      return c;
+    }));
+
+    if (currentUser && currentUser.id === clientId) {
+      setCurrentUser(prev => ({
+        ...prev,
+        currentWeight: numericWeight,
+        bodyFatPercent: numericFat,
+        weightHistory: [...(prev.weightHistory || []), { date: label, weight: numericWeight, fat: numericFat }]
+      }));
+    }
   };
 
   // PAYMENT CRUD
@@ -221,6 +332,37 @@ export function AuthProvider({ children }) {
 
   const deleteDietitian = (id) => {
     setDietitians(prev => prev.filter(d => d.id !== id));
+  };
+
+  // APPOINTMENT CRUD
+  const addAppointment = (aptData) => {
+    const newApt = {
+      id: `apt-${Date.now()}`,
+      status: 'Onaylandı',
+      ...aptData
+    };
+    setAppointments(prev => [newApt, ...prev]);
+  };
+
+  const updateAppointmentStatus = (id, status) => {
+    setAppointments(prev => prev.map(a => a.id === id ? { ...a, status } : a));
+  };
+
+  const deleteAppointment = (id) => {
+    setAppointments(prev => prev.filter(a => a.id !== id));
+  };
+
+  // IN-APP MESSAGING CRUD
+  const sendMessage = (receiverId, text, senderRole, senderName) => {
+    const newMsg = {
+      id: `msg-${Date.now()}`,
+      senderRole: senderRole || role,
+      senderName: senderName || currentUser?.name || 'Kullanıcı',
+      receiverId: receiverId,
+      text: text,
+      timestamp: new Date().toISOString().replace('T', ' ').substring(0, 16)
+    };
+    setMessages(prev => [...prev, newMsg]);
   };
 
   // MOTIVATION QUOTE CRUD
@@ -293,6 +435,7 @@ export function AuthProvider({ children }) {
         addClient,
         updateClient,
         deleteClient,
+        addWeightLog,
         dietitians,
         addDietitian,
         updateDietitian,
@@ -307,6 +450,11 @@ export function AuthProvider({ children }) {
         updatePayment,
         deletePayment,
         appointments,
+        addAppointment,
+        updateAppointmentStatus,
+        deleteAppointment,
+        messages,
+        sendMessage,
         stickyNotes,
         addStickyNote,
         deleteStickyNote,

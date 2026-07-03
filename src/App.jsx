@@ -4,6 +4,7 @@ import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import AuthModal from './components/common/AuthModal';
 import MotivationToast from './components/common/MotivationToast';
+import FloatingWidgets from './components/common/FloatingWidgets';
 
 // Guest Components
 import HeroSection from './components/guest/HeroSection';
@@ -69,6 +70,12 @@ function AppContent() {
         isOpen={isQuizOpen}
         onClose={() => setIsQuizOpen(false)}
         onOpenAuth={() => setIsAuthOpen(true)}
+      />
+
+      {/* Floating Scroll To Top & Quick Action Widgets */}
+      <FloatingWidgets
+        onOpenAuth={() => setIsAuthOpen(true)}
+        onOpenQuiz={() => setIsQuizOpen(true)}
       />
 
       {/* 45s Automatic Motivation Notification Toast */}

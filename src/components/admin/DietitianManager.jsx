@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { exportToExcel, exportToPdf } from '../../utils/exportHelpers';
 import { BRAND_CONFIG } from '../../config/brandConfig';
-import { Stethoscope, Plus, Edit3, Trash2, Save, X, Award, Users, Star } from 'lucide-react';
+import { Stethoscope, Plus, Edit3, Trash2, Save, X, Download, FileText } from 'lucide-react';
 
 export default function DietitianManager() {
   const { dietitians, addDietitian, updateDietitian, deleteDietitian } = useAuth();
@@ -13,6 +14,49 @@ export default function DietitianManager() {
   const [experience, setExperience] = useState('5 Yıl');
   const [speciality, setSpeciality] = useState('Kilo Yönetimi, Sporcu Beslenmesi');
   const [bio, setBio] = useState('');
+
+  const handleExportExcel = () => {
+    const data = dietitians.map(d => ({
+      "Uzman ID": d.id,
+      "Ad Soyad": d.name,
+      "Unvan": d.title,
+      "Tecrübe": d.experience,
+      "Uzmanlık Alanları": d.speciality,
+      "Aktif Danışan": d.clientCount
+    }));
+    exportToExcel(data, "Diyetisyen_Kadro_Raporu", "Uzman Diyetisyen Kadro Listesi");
+  };
+
+  const handleExportPdf = () => {
+    const rowsHtml = dietitians.map(d => `
+      <tr>
+        <td><strong>${d.name}</strong></td>
+        <td>${d.title}</td>
+        <td>${d.experience}</td>
+        <td>${d.speciality}</td>
+        <td><strong style="color: #047857;">${d.clientCount} Kişi</strong></td>
+      </tr>
+    `).join('');
+
+    const tableHtml = `
+      <table>
+        <thead>
+          <tr>
+            <th>Diyetisyen Adı</th>
+            <th>Unvan</th>
+            <th>Tecrübe</th>
+            <th>Uzmanlık Alanları</th>
+            <th>Aktif Danışan</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rowsHtml}
+        </tbody>
+      </table>
+    `;
+
+    exportToPdf("Uzman Diyetisyen Kadro Raporu", tableHtml, `Kayıtlı Diyetisyen Sayısı: ${dietitians.length}`);
+  };
 
   const handleAdd = (e) => {
     e.preventDefault();
@@ -48,16 +92,34 @@ export default function DietitianManager() {
           <p className="text-xs text-slate-500 mt-0.5">Kurumda görev alan uzman diyetisyen kadrosunu yönetin</p>
         </div>
 
-        <button
-          onClick={() => {
-            setName(''); setTitle(''); setBio('');
-            setIsAddOpen(true);
-          }}
-          className="gradient-btn-emerald px-4 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 shadow-md"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Yeni Diyetisyen Ekle</span>
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={() => {
+              setName(''); setTitle(''); setBio('');
+              setIsAddOpen(true);
+            }}
+            className="gradient-btn-emerald px-3.5 py-2 rounded-xl text-xs font-extrabold flex items-center gap-1.5 shadow-md"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Yeni Diyetisyen Ekle</span>
+          </button>
+
+          <button
+            onClick={handleExportExcel}
+            className="px-3.5 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 text-xs font-bold flex items-center gap-1 transition-colors"
+          >
+            <Download className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Excel</span>
+          </button>
+
+          <button
+            onClick={handleExportPdf}
+            className="px-3.5 py-2 rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 text-xs font-bold flex items-center gap-1 transition-colors"
+          >
+            <FileText className="w-3.5 h-3.5 text-emerald-600" />
+            <span>PDF</span>
+          </button>
+        </div>
       </div>
 
       {/* Dietitians Grid */}

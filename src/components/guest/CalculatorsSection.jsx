@@ -207,6 +207,20 @@ export default function CalculatorsSection() {
                     <Info className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                     <span><strong>Klinik İpucu:</strong> {bmiResult.advice}</span>
                   </div>
+
+                  <div className="pt-2">
+                    <button
+                      onClick={() => {
+                        const text = `NutriVibe Sağlık Analizim:\n- VKİ: ${bmiResult.val} kg/m² (${bmiResult.category})\n- Günlük Su İhtiyacı: ${waterResult} L\n- BMR: ${bmrResult.bmr} kcal (Kilo Koruma: ${bmrResult.maintenance} kcal)\n- İdeal Kilo: ${idealResult} kg`;
+                        navigator.clipboard.writeText(text);
+                        alert("Analiz özetiniz panoya kopyalandı!");
+                      }}
+                      className="gradient-btn-emerald px-5 py-2.5 rounded-xl text-xs font-bold inline-flex items-center gap-2 shadow-md hover:brightness-110"
+                    >
+                      <CheckCircle2 className="w-4 h-4" />
+                      <span>Tüm Analiz Özetimi Kopyala</span>
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

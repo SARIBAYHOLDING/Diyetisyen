@@ -5,6 +5,10 @@
   --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: #f8fafc;
@@ -12,6 +16,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Base Utility Classes for Guaranteed Spacing */
@@ -54,19 +59,20 @@ body {
   gap: 1.25rem;
 }
 
-/* Glass & Card Containers */
+/* Glass & Card Containers with High Contrast */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.1), 0 4px 12px rgba(0, 0, 0, 0.03);
-  border-radius: 1.25rem;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.15), 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: 1.5rem;
+  color: #ffffff;
 }
 
 .white-card {
   background: #ffffff;
   border: 1px solid #e2e8f0;
-  border-radius: 1.25rem;
+  border-radius: 1.5rem;
   padding: 1.5rem;
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
   transition: all 0.25s ease-in-out;
@@ -85,25 +91,31 @@ body {
   padding: 0.75rem 1rem;
   border-radius: 0.75rem;
   font-size: 0.875rem;
+  font-weight: 500;
   width: 100%;
   outline: none;
   transition: all 0.2s ease;
 }
 
+.glass-input::placeholder {
+  color: #64748b;
+  font-weight: 400;
+}
+
 .glass-input:focus {
   border-color: #059669;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
 }
 
 /* Buttons */
 .gradient-btn-emerald {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #10b981 0%, #047857 100%);
   color: #ffffff !important;
   font-weight: 800;
   border: none;
   border-radius: 0.875rem;
   padding: 0.75rem 1.5rem;
-  box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.35);
+  box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.4);
   cursor: pointer;
   transition: all 0.25s ease;
   display: inline-flex;
@@ -113,15 +125,35 @@ body {
 }
 
 .gradient-btn-emerald:hover {
-  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
-  box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.5);
+  background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+  box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.55);
   transform: translateY(-1px);
 }
 
 .gradient-text-emerald {
-  background: linear-gradient(135deg, #059669 0%, #10b981 50%, #047857 100%);
+  background: linear-gradient(135deg, #047857 0%, #10b981 50%, #065f46 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 0.5);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981;
 }
 
 /* Animations */
