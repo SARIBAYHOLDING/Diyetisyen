@@ -2,7 +2,7 @@
 export const MOTIVATION_QUOTES = [
   // 1-40: Beslenme & Disiplin
   { id: 1, text: "Yedikleriniz sağlığınızın, düşündükleriniz hayatınızın aynasıdır.", category: "Beslenme", author: "NutriVibe İpucu" },
-  { id: 2, text: "Kilo vermek bir sonuçtur; asıl zafer sağlıklı yaşam alışkanlığı kazanmaktır.", category: "Zihin", author: "Dyt. Zeynep Kaya" },
+  { id: 2, text: "Kilo vermek bir sonuçtur; asıl zafer sağlıklı yaşam alışkanlığı kazanmaktır.", category: "Zihin", author: "Dyt. Ceren Çetinkaya" },
   { id: 3, text: "Her sağlıklı öğün, gelecekteki bedeninize verdiğiniz bir hediyedir.", category: "Beslenme", author: "Beslenme Bilimi" },
   { id: 4, text: "Su içmek sadece susuzluğu gidermez; metabolizmanızı %30 hızlandırır!", category: "Su Takibi", author: "NutriVibe İpucu" },
   { id: 5, text: "Mükemmel olmaya çalışma, sadece dünkünden daha tutarlı ol.", category: "Disiplin", author: "Kişisel Gelişim" },
@@ -11,7 +11,7 @@ export const MOTIVATION_QUOTES = [
   { id: 8, text: "Bugün vazgeçmezsen, yarın teşekkür edeceğin bedene sahip olacaksın.", category: "Motivasyon", author: "Sağlık Koçu" },
   { id: 9, text: "Şeker anlık mutluluk verir, sağlıklı beslenme ise ömür boyu zindelik.", category: "Beslenme", author: "Dyt. Melis Şahin" },
   { id: 10, text: "Yavaş ve çiğneyerek yemek sindirimi kolaylaştırır ve erken doygunluk sağlar.", category: "Alışkanlık", author: "Beslenme Rehberi" },
-  { id: 11, text: "Hedefinize giden yolda kaç kaçamak yaptığınız değil, nasıl devam ettiğiniz önemlidir.", category: "Zihin", author: "Dyt. Zeynep Kaya" },
+  { id: 11, text: "Hedefinize giden yolda kaç kaçamak yaptığınız değil, nasıl devam ettiğiniz önemlidir.", category: "Zihin", author: "Dyt. Ceren Çetinkaya" },
   { id: 12, text: "Protein zengini bir kahvaltı gün boyu kan şekerinizi dengede tutar.", category: "Kahvaltı", author: "NutriVibe İpucu" },
   { id: 13, text: "Tartıdaki rakam tek kriter değildir; kas kütlesi ve enerjiniz esas ölçüttür.", category: "Farkındalık", author: "Sağlık Paneli" },
   { id: 14, text: "İşlenmiş gıdalar yerine doğanın bize sunduğu taze gıdaları tercih edin.", category: "Beslenme", author: "Doğal Yaşam" },
@@ -22,7 +22,7 @@ export const MOTIVATION_QUOTES = [
   { id: 19, text: "Lifli gıdalar bağırsak sağlığınızı korur ve uzun süre tok tutar.", category: "Beslenme", author: "Sindirim Sağlığı" },
   { id: 20, text: "Her gün 10.000 adım adımı atmak kalbinize ve kan dolaşımınıza can verir.", category: "Hareket", author: "NutriVibe İpucu" },
   { id: 21, text: "Bedeniniz yaşadığınız tek kalıcı evdir; ona çok iyi bakın.", category: "Motivasyon", author: "Jim Rohn" },
-  { id: 22, text: "Diyet kısıtlama değil, bedenini doğru yakıtla besleme sanatıdır.", category: "Beslenme", author: "Dyt. Zeynep Kaya" },
+  { id: 22, text: "Diyet kısıtlama değil, bedenini doğru yakıtla besleme sanatıdır.", category: "Beslenme", author: "Dyt. Ceren Çetinkaya" },
   { id: 23, text: "Stres anında yeme isteği duyduğunuzda derin nefes egzersizi yapın.", category: "Farkındalık", author: "Zihinsel Sağlık" },
   { id: 24, text: "Zeytinyağı ve avokado gibi sağlıklı yağlar hücre yenilenmesini destekler.", category: "Beslenme", author: "Sağlıklı Yağlar" },
   { id: 25, text: "Başarı, her gün tekrarlanan küçük disiplinlerin toplamıdır.", category: "Disiplin", author: "Robert Collier" },
@@ -36,7 +36,7 @@ export const MOTIVATION_QUOTES = [
   { id: 33, text: "Her gün aldığınız 2.5 litre su cildinize doğal bir parlaklık kazandırır.", category: "Güzellik & Su", author: "Cilt Sağlığı" },
   { id: 34, text: "Yemek yerken ekranlardan uzak durmak porsiyon kontrolünü kolaylaştırır.", category: "Farkındalık", author: "Mindful Eating" },
   { id: 35, text: "Pes etmek üzere olduğunda neden başladığını hatırla.", category: "Motivasyon", author: "NutriVibe İpucu" },
-  { id: 36, text: "Tuz tüketimini azaltmak ödem birikimini ve tansiyon riskini engeller.", category: "Sağlık", author: "Dyt. Zeynep Kaya" },
+  { id: 36, text: "Tuz tüketimini azaltmak ödem birikimini ve tansiyon riskini engeller.", category: "Sağlık", author: "Dyt. Ceren Çetinkaya" },
   { id: 37, text: "Antrenman sonrası protein ve kompleks karbonhidrat toparlanmayı hızlandırır.", category: "Sporcu Beslenmesi", author: "NutriVibe İpucu" },
   { id: 38, text: "Kas kütleniz arttıkça oturduğunuz yerde bile daha fazla kalori yakarsınız.", category: "Metabolizma", author: "Egzersiz Bilimi" },
   { id: 39, text: "Zorluklar gelişimin habercisidir; vazgeçme, devam et!", category: "Zihin", author: "NutriVibe İpucu" },
@@ -47,7 +47,7 @@ export const MOTIVATION_QUOTES = [
     const i = index + 41;
     const topics = [
       { cat: "Zihin & Güç", text: `Adım ${i}: Hedefine giden yolda kararlılık en güçlü silahındır. Küçük adımlar büyük zaferler doğurur.`, author: "NutriVibe Akademi" },
-      { cat: "Beslenme DENGESİ", text: `Öğün ${i}: Dengeli tabak modeli (1/2 Sebze, 1/4 Protein, 1/4 Kompleks Karbonhidrat) formunu korur.`, author: "Dyt. Zeynep Kaya" },
+      { cat: "Beslenme DENGESİ", text: `Öğün ${i}: Dengeli tabak modeli (1/2 Sebze, 1/4 Protein, 1/4 Kompleks Karbonhidrat) formunu korur.`, author: "Dyt. Ceren Çetinkaya" },
       { cat: "Hydration Focus", text: `Su İpucu ${i}: Yanında sürekli su matarası bulundurmak günlük su hedefine ulaşmanı kolaylaştırır.`, author: "Hydration Bot" },
       { cat: "Yaşam Enerjisi", text: `Enerji ${i}: Vücudunu işlenmiş gıdalarla yorma, ona taze ve organik enerji kaynakları sun.`, author: "NutriVibe İpucu" },
       { cat: "Metabolizma Dostu", text: `Metabolizma ${i}: Düzenli aralıklarla beslenmek kan şekeri dalgalanmalarını önler.`, author: "Dyt. Caner Aksoy" },

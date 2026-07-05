@@ -78,16 +78,16 @@ export default function DietitianDashboard() {
       <div className="bg-white rounded-3xl p-6 sm:p-8 border border-emerald-200 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="flex items-center space-x-4">
           <img
-            src={currentUser?.avatar || "https://images.unsplash.com/photo-1594824813566-82823d5afe9a?w=200&auto=format&fit=crop&q=80"}
-            alt={currentUser?.name}
-            className="w-16 h-16 rounded-2xl object-cover border-2 border-emerald-500 shadow-md"
+            src={currentUser?.avatar || "/ceren_cetinkaya.jpg"}
+            alt={currentUser?.name || "Dyt. Ceren Çetinkaya"}
+            className="w-16 h-16 rounded-2xl object-cover object-top border-2 border-emerald-500 shadow-md"
           />
           <div>
             <h1 className="text-2xl font-black text-slate-900 flex items-center gap-2">
-              Hoş Geldiniz, {currentUser?.name || "Dyt. Zeynep Kaya"} 🩺
+              Hoş Geldiniz, {currentUser?.name || "Dyt. Ceren Çetinkaya"} 🩺
             </h1>
             <p className="text-xs text-slate-500 mt-0.5 font-medium">
-              {currentUser?.title || "Klinik Beslenme Uzmanı"} • <strong className="text-emerald-700">{clients.length} Atanmış Danışan</strong>
+              {currentUser?.title || "Klinik Beslenme Uzmanı & Kurucu"} • <strong className="text-emerald-700">{clients.length} Atanmış Danışan</strong>
             </p>
           </div>
         </div>

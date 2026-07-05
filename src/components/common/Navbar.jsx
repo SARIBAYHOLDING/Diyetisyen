@@ -3,8 +3,8 @@ import { useAuth } from '../../context/AuthContext';
 import { BRAND_CONFIG } from '../../config/brandConfig';
 import { Sparkles, UserCheck, LogOut, ShieldCheck, Stethoscope, User, Calculator, Flame } from 'lucide-react';
 
-export default function Navbar({ onOpenAuth, onOpenQuiz, activeSection, setActiveSection }) {
-  const { role, currentUser, logout, triggerRandomQuote } = useAuth();
+export default function Navbar({ onOpenAuth, onOpenQuiz, onOpenAdminLogin, activeSection, setActiveSection }) {
+  const { role, currentUser, logout, triggerRandomQuote, brandConfig } = useAuth();
 
   const getRoleBadge = () => {
     if (role === 'client') return { text: 'Danışan Paneli', bg: 'bg-emerald-50 text-emerald-700 border-emerald-300', icon: User };
@@ -37,13 +37,13 @@ export default function Navbar({ onOpenAuth, onOpenQuiz, activeSection, setActiv
           </div>
           <div>
             <span className="text-lg font-extrabold tracking-tight text-slate-900 flex items-center gap-1.5 whitespace-nowrap">
-              {BRAND_CONFIG.name}
+              {brandConfig.name || "Dyt. Ceren Çetinkaya"}
               <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-300">
                 PRO
               </span>
             </span>
             <p className="text-[10px] text-slate-500 hidden sm:block font-medium">
-              {BRAND_CONFIG.tagline}
+              {brandConfig.tagline || "Kilo Takip Modülü & Beslenme Portalı"}
             </p>
           </div>
         </div>
@@ -87,7 +87,19 @@ export default function Navbar({ onOpenAuth, onOpenQuiz, activeSection, setActiv
         )}
 
         {/* Right Action Bar */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex items-center gap-2.5 shrink-0">
+          {/* Admin Dedicated Login Shortcut Button */}
+          {role === 'guest' && (
+            <button
+              onClick={onOpenAdminLogin}
+              title="Yönetici Portalı Girişi"
+              className="px-3 py-2 rounded-xl bg-emerald-900 text-emerald-100 hover:bg-emerald-950 text-xs font-extrabold flex items-center gap-1.5 border border-emerald-700 shadow-sm transition-all"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-300" />
+              <span className="hidden sm:inline">Admin Girişi</span>
+            </button>
+          )}
+
           {/* Quick Motivation Tester Button */}
           <button
             onClick={triggerRandomQuote}

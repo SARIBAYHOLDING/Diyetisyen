@@ -1,38 +1,16 @@
-// Mock Database for NutriVibe System
+// Mock Database for Dyt. Ceren Çetinkaya Kilo Takip Modülü
 
 export const INITIAL_DIETITIANS = [
   {
     id: "dyt-1",
-    name: "Dyt. Zeynep Kaya",
-    title: "Klinik Beslenme & Bariatrik Diyet Uzmanı",
-    avatar: "https://images.unsplash.com/photo-1594824813566-82823d5afe9a?w=400&auto=format&fit=crop&q=80",
-    experience: "10 Yıl",
-    speciality: "Kilo Yönetimi, Polikistik Over, Diyabet Beslenmesi",
-    clientCount: 42,
-    rating: 4.9,
-    bio: "Hacettepe Üniversitesi Beslenme ve Diyetetik mezunu. 1000'den fazla danışanına sürdürülebilir beslenme alışkanlığı kazandırdı."
-  },
-  {
-    id: "dyt-2",
-    name: "Dyt. Caner Aksoy",
-    title: "Sporcu Beslenmesi & Kas Kazanımı Uzmanı",
-    avatar: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400&auto=format&fit=crop&q=80",
-    experience: "8 Yıl",
-    speciality: "Sporcu Beslenmesi, Hipertrofi, Ketojenik Diyet",
-    clientCount: 35,
-    rating: 4.85,
-    bio: "Marmara Üniversitesi Spor Bilimleri ve Beslenme yüksek lisansı mezunu. Milli atletlerin ve voleybolcuların beslenme koçu."
-  },
-  {
-    id: "dyt-3",
-    name: "Dyt. Melis Şahin",
-    title: "Sezgisel Beslenme & Danışmanlık",
-    avatar: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&auto=format&fit=crop&q=80",
-    experience: "6 Yıl",
-    speciality: "Sezgisel Beslenme, Eliminasyon Diyeti, Gıda Toleransı",
-    clientCount: 28,
-    rating: 4.92,
-    bio: "Ege Üniversitesi mezunu. Yeme bozuklukları ve fonksiyonel tıp beslenmesi üzerine uzmanlaşmıştır."
+    name: "Dyt. Ceren Çetinkaya",
+    title: "Klinik Beslenme & Kilo Yönetimi Uzmanı (Kurucu)",
+    avatar: "/ceren_cetinkaya.jpg",
+    experience: "9 Yıl",
+    speciality: "Kilo Takibi & Yönetimi, Polikistik Over, Diyabet Beslenmesi, Metabolic Balance",
+    clientCount: 154,
+    rating: 5.0,
+    bio: "Hacettepe Üniversitesi Beslenme ve Diyetetik mezunu. Projenin sahibi ve tek uzmanı olarak 2000'den fazla danışanına kişiselleştirilmiş kilo takip ve sürdürülebilir beslenme danışmanlığı verdi."
   }
 ];
 
@@ -44,7 +22,7 @@ export const INITIAL_CLIENTS = [
     phone: "+90 532 111 2233",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80",
     assignedDietitianId: "dyt-1",
-    assignedDietitianName: "Dyt. Zeynep Kaya",
+    assignedDietitianName: "Dyt. Ceren Çetinkaya",
     package: "3 Aylık VIP Online Diyet",
     startDate: "2026-05-10",
     endDate: "2026-08-10",
@@ -67,8 +45,8 @@ export const INITIAL_CLIENTS = [
     email: "mert.d@demo.com",
     phone: "+90 533 444 5566",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80",
-    assignedDietitianId: "dyt-2",
-    assignedDietitianName: "Dyt. Caner Aksoy",
+    assignedDietitianId: "dyt-1",
+    assignedDietitianName: "Dyt. Ceren Çetinkaya",
     package: "1 Aylık Sporcu Beslenmesi",
     startDate: "2026-06-01",
     endDate: "2026-07-01",
@@ -83,7 +61,7 @@ export const INITIAL_CLIENTS = [
     waterLevel: 62.0,
     waterIntakeGoal: 3200,
     waterIntakeCurrent: 2400,
-    clinicalNotes: "Kas kütlesi artırımı hedefleniyor. Antrenman öncesi ve sonrası öğün zamanlamaları optimize edildi. Kreatin takviyesi önerildi."
+    clinicalNotes: "Kas kütlesi artırımı hedefleniyor. Antrenman öncesi ve sonrası öğün zamanlamaları optimize edildi."
   },
   {
     id: "c-103",
@@ -92,7 +70,7 @@ export const INITIAL_CLIENTS = [
     phone: "+90 535 777 8899",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&auto=format&fit=crop&q=80",
     assignedDietitianId: "dyt-1",
-    assignedDietitianName: "Dyt. Zeynep Kaya",
+    assignedDietitianName: "Dyt. Ceren Çetinkaya",
     package: "6 Aylık Bütüncül Paket",
     startDate: "2026-02-15",
     endDate: "2026-08-15",
@@ -107,7 +85,7 @@ export const INITIAL_CLIENTS = [
     waterLevel: 55.4,
     waterIntakeGoal: 2700,
     waterIntakeCurrent: 2100,
-    clinicalNotes: "Haşimato tiroidi mevcut. Glütensiz beslenme protokolü uygulanıyor. Enerji seviyelerinde belirgin artış raporlandı."
+    clinicalNotes: "Haşimato tiroidi mevcut. Glütensiz beslenme protokolü uygulanıyor."
   },
   {
     id: "c-104",
@@ -115,8 +93,8 @@ export const INITIAL_CLIENTS = [
     email: "burak.e@demo.com",
     phone: "+90 536 222 3344",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&auto=format&fit=crop&q=80",
-    assignedDietitianId: "dyt-3",
-    assignedDietitianName: "Dyt. Melis Şahin",
+    assignedDietitianId: "dyt-1",
+    assignedDietitianName: "Dyt. Ceren Çetinkaya",
     package: "1 Aylık Standart Paket",
     startDate: "2026-05-01",
     endDate: "2026-06-01",
@@ -277,7 +255,7 @@ export const INITIAL_APPOINTMENTS = [
     clientId: "c-101",
     clientName: "Ahsen Yılmaz",
     dietitianId: "dyt-1",
-    dietitianName: "Dyt. Zeynep Kaya",
+    dietitianName: "Dyt. Ceren Çetinkaya",
     date: "2026-07-04",
     time: "11:00",
     type: "Görüntülü Online Görüşme",
@@ -299,7 +277,7 @@ export const INITIAL_APPOINTMENTS = [
     clientId: "c-103",
     clientName: "Selin Öztürk",
     dietitianId: "dyt-1",
-    dietitianName: "Dyt. Zeynep Kaya",
+    dietitianName: "Dyt. Ceren Çetinkaya",
     date: "2026-07-05",
     time: "16:00",
     type: "Görüntülü Online Görüşme",

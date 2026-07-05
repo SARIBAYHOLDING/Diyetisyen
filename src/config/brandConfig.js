@@ -1,12 +1,13 @@
-// Centralized Brand & Credentials Configuration
+// Centralized Brand & Credentials Configuration for Dyt. Ceren Çetinkaya
 
 export const BRAND_CONFIG = {
-  name: "NutriVibe Pro",
-  tagline: "Kişiselleştirilmiş Beslenme & Sağlıklı Yaşam Portalı",
-  description: "Bilimsel beslenme yaklaşımı, uzman diyetisyen kadrosu ve akıllı takip teknolojisi ile hedeflerinize emin adımlarla ulaşın.",
-  phone: "+90 (850) 441 90 90",
-  email: "iletisim@nutrivibepro.com",
-  address: "Bağdat Caddesi No: 242, Kadıköy / İstanbul",
+  name: "Dyt. Ceren Çetinkaya",
+  tagline: "Kilo Takip Modülü & Kişiselleştirilmiş Beslenme Portalı",
+  description: "Dyt. Ceren Çetinkaya liderliğinde bilimsel beslenme yaklaşımı, kişiye özel diyet programları ve akıllı kilo takip teknolojisi.",
+  phone: "+90 (545) 472 64 40",
+  whatsapp: "https://wa.me/905454726440",
+  email: "iletisim@cerencetinkaya.com",
+  address: "Barbaros, 33150 Yenişehir/Mersin",
   workingHours: "Hafta İçi: 09:00 - 19:00 | Cumartesi: 10:00 - 16:00",
   
   // Credentials
@@ -17,14 +18,16 @@ export const BRAND_CONFIG = {
   engineVersion: "Suda Dynamics v4.8 Engine",
 
   social: {
-    instagram: "https://instagram.com",
+    instagram: "https://instagram.com/uzm.dyt.cerencetinkaya",
+    whatsapp: "https://wa.me/905454726440",
     youtube: "https://youtube.com",
     linkedin: "https://linkedin.com"
   },
   stats: {
-    happyClients: "4,850+",
-    successRate: "%98.4",
-    expertDietitians: "14+",
-    yearsExperience: "12+"
+    happyClients: "2,450+",
+    successRate: "%99.1",
+    expertDietitians: "1+",
+    yearsExperience: "9+"
   }
 };
+

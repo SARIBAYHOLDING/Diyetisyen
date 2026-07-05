@@ -16,7 +16,7 @@ export default function ClientMessageModal({ isOpen, onClose, client }) {
     if (!inputText.trim()) return;
 
     const senderRole = role === 'dietitian' ? 'dietitian' : 'client';
-    const senderName = currentUser?.name || (role === 'dietitian' ? 'Dyt. Zeynep Kaya' : client?.name || 'Ahsen Yılmaz');
+    const senderName = currentUser?.name || (role === 'dietitian' ? 'Dyt. Ceren Çetinkaya' : client?.name || 'Ahsen Yılmaz');
 
     sendMessage(targetClientId, inputText, senderRole, senderName);
     setInputText('');

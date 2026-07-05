@@ -19,7 +19,7 @@ export default function ClientDashboard() {
   const client = clients.find(c => c.id === activeClientId) || currentUser || {
     id: "c-101",
     name: "Ahsen Yılmaz",
-    assignedDietitianName: "Dyt. Zeynep Kaya",
+    assignedDietitianName: "Dyt. Ceren Çetinkaya",
     package: "3 Aylık VIP Online Diyet",
     startWeight: 78.5,
     currentWeight: 71.2,
@@ -221,13 +221,13 @@ export default function ClientDashboard() {
             <h3 className="text-sm font-bold text-white">Atanmış Diyetisyeniniz</h3>
             <div className="flex items-center space-x-3 p-3 rounded-2xl bg-slate-900/80 border border-white/5">
               <img
-                src="https://images.unsplash.com/photo-1594824813566-82823d5afe9a?w=120&auto=format&fit=crop&q=80"
-                alt="Dyt. Zeynep Kaya"
-                className="w-12 h-12 rounded-xl object-cover border border-emerald-400/40"
+                src="/ceren_cetinkaya.jpg"
+                alt="Dyt. Ceren Çetinkaya"
+                className="w-12 h-12 rounded-xl object-cover object-top border border-emerald-400/40"
               />
               <div>
-                <h4 className="text-sm font-bold text-white">{client.assignedDietitianName || "Dyt. Zeynep Kaya"}</h4>
-                <p className="text-[10px] text-emerald-400 font-medium">Klinik Beslenme Uzmanı</p>
+                <h4 className="text-sm font-bold text-white">{client.assignedDietitianName || "Dyt. Ceren Çetinkaya"}</h4>
+                <p className="text-[10px] text-emerald-400 font-medium">Klinik Beslenme Uzmanı (Kurucu)</p>
               </div>
             </div>
 

@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import AuthModal from './components/common/AuthModal';
+import AdminLoginModal from './components/admin/AdminLoginModal';
 import MotivationToast from './components/common/MotivationToast';
 import FloatingWidgets from './components/common/FloatingWidgets';
 
@@ -23,6 +24,7 @@ import AdminDashboard from './components/admin/AdminDashboard';
 function AppContent() {
   const { role } = useAuth();
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
 
@@ -31,6 +33,7 @@ function AppContent() {
       {/* Top Navigation Header */}
       <Navbar
         onOpenAuth={() => setIsAuthOpen(true)}
+        onOpenAdminLogin={() => setIsAdminLoginOpen(true)}
         onOpenQuiz={() => setIsQuizOpen(true)}
         activeSection={activeSection}
         setActiveSection={setActiveSection}
@@ -58,12 +61,17 @@ function AppContent() {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <Footer onOpenAdminLogin={() => setIsAdminLoginOpen(true)} />
 
       {/* Auth Modal & Quiz Modal */}
       <AuthModal
         isOpen={isAuthOpen}
         onClose={() => setIsAuthOpen(false)}
+      />
+
+      <AdminLoginModal
+        isOpen={isAdminLoginOpen}
+        onClose={() => setIsAdminLoginOpen(false)}
       />
 
       <DietQuizModal

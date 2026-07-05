@@ -1,8 +1,10 @@
 import React from 'react';
-import { BRAND_CONFIG } from '../../config/brandConfig';
-import { Sparkles, Phone, Mail, MapPin, Globe, Share2, MessageCircle } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { Sparkles, Phone, Mail, MapPin, Globe, Share2, MessageCircle, ShieldCheck } from 'lucide-react';
 
-export default function Footer() {
+export default function Footer({ onOpenAdminLogin }) {
+  const { brandConfig } = useAuth();
+
   return (
     <footer className="bg-white border-t border-emerald-100 text-slate-700 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
@@ -14,20 +16,20 @@ export default function Footer() {
                 <Sparkles className="w-5 h-5" />
               </div>
               <span className="text-xl font-extrabold tracking-tight text-slate-900">
-                {BRAND_CONFIG.name}
+                {brandConfig.name || "Dyt. Ceren Çetinkaya"}
               </span>
             </div>
             <p className="text-xs text-slate-600 font-medium leading-relaxed max-w-sm">
-              {BRAND_CONFIG.description}
+              {brandConfig.description}
             </p>
             <div className="flex items-center gap-3 pt-2 text-slate-400">
-              <a href={BRAND_CONFIG.social.instagram} target="_blank" rel="noreferrer" className="hover:text-emerald-600 transition-colors">
+              <a href={brandConfig.social?.instagram || "#"} target="_blank" rel="noreferrer" className="hover:text-emerald-600 transition-colors">
                 <Globe className="w-5 h-5" />
               </a>
-              <a href={BRAND_CONFIG.social.youtube} target="_blank" rel="noreferrer" className="hover:text-emerald-600 transition-colors">
+              <a href={brandConfig.social?.youtube || "#"} target="_blank" rel="noreferrer" className="hover:text-emerald-600 transition-colors">
                 <Share2 className="w-5 h-5" />
               </a>
-              <a href={BRAND_CONFIG.social.linkedin} target="_blank" rel="noreferrer" className="hover:text-emerald-600 transition-colors">
+              <a href={brandConfig.social?.linkedin || "#"} target="_blank" rel="noreferrer" className="hover:text-emerald-600 transition-colors">
                 <MessageCircle className="w-5 h-5" />
               </a>
             </div>
@@ -51,7 +53,15 @@ export default function Footer() {
               <li><a href="#hero" className="hover:text-emerald-600 transition-colors">Hakkımızda</a></li>
               <li><a href="#dietitians" className="hover:text-emerald-600 transition-colors">Uzman Kadromuz</a></li>
               <li><a href="#testimonials" className="hover:text-emerald-600 transition-colors">Başarı Hikayeleri</a></li>
-              <li><a href="#" className="hover:text-emerald-600 transition-colors">Gizlilik Sözleşmesi</a></li>
+              <li>
+                <button
+                  onClick={onOpenAdminLogin}
+                  className="text-emerald-700 hover:text-emerald-900 font-bold flex items-center gap-1 transition-colors"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Yönetici Portalı Girişi</span>
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -61,15 +71,15 @@ export default function Footer() {
             <ul className="space-y-2.5 text-xs font-medium text-slate-600">
               <li className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>{BRAND_CONFIG.phone}</span>
+                <span>{brandConfig.phone}</span>
               </li>
               <li className="flex items-center space-x-2">
                 <Mail className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>{BRAND_CONFIG.email}</span>
+                <span>{brandConfig.email}</span>
               </li>
               <li className="flex items-start space-x-2">
                 <MapPin className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <span>{BRAND_CONFIG.address}</span>
+                <span>{brandConfig.address}</span>
               </li>
             </ul>
           </div>
@@ -77,9 +87,9 @@ export default function Footer() {
 
         {/* Bottom copyright line with Suda Dynamics attribution */}
         <div className="mt-12 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-medium">
-          <p>© {new Date().getFullYear()} {BRAND_CONFIG.name}. Tüm hakları saklıdır.</p>
+          <p>© {new Date().getFullYear()} {brandConfig.name || "Dyt. Ceren Çetinkaya"}. Tüm hakları saklıdır.</p>
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-800 font-bold border border-emerald-200 text-[11px]">
-            <span>⚡ {BRAND_CONFIG.footprint}</span>
+            <span>⚡ {brandConfig.footprint || "Powered by Suda Dynamics"}</span>
           </div>
         </div>
       </div>

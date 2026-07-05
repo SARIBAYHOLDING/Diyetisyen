@@ -1,45 +1,9 @@
 import React from 'react';
+import { useAuth } from '../../context/AuthContext';
 import { Star, Award, Quote, CheckCircle } from 'lucide-react';
 
 export default function TestimonialsSection() {
-  const testimonials = [
-    {
-      id: 1,
-      name: "Ahsen Yılmaz",
-      age: 29,
-      job: "Yazılım Mühendisi",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
-      loss: "-15.5 kg",
-      period: "3 Ayda",
-      dietitian: "Dyt. Zeynep Kaya",
-      comment: "Masa başı çalışırken sürekli tatlı krizleri yaşıyordum. Zeynep Hanım ile hazırladığımız kan tahlili odaklı diyet sayesinde hiç aç kalmadan 15 kilo verdim. En güzel kısmı diyet değişikliği taleplerime anında cevap verilmesiydi!",
-      rating: 5
-    },
-    {
-      id: 2,
-      name: "Mert Demir",
-      age: 34,
-      job: "Finans Analisti",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
-      loss: "-9.0 kg Yağ Yakımı",
-      period: "2 Ayda (+4kg Kas)",
-      dietitian: "Dyt. Caner Aksoy",
-      comment: "Sporcu beslenmesi konusunda Caner Bey tam bir uzman. Yağ kütlemi %24'ten %16'ya düşürürken kas hacmimi artırdık. Enerji seviyem hiç düşmedi.",
-      rating: 5
-    },
-    {
-      id: 3,
-      name: "Selin Öztürk",
-      age: 41,
-      job: "Mimar",
-      avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80",
-      loss: "-18.2 kg",
-      period: "4.5 Ayda",
-      dietitian: "Dyt. Zeynep Kaya",
-      comment: "Haşimato tiroidim olduğu için kilo veremeyeceğimi sanıyordum. Glütensiz özel protokol ile hayat kalitem yeniden yükseldi. Motivasyon mesajları da tam pes edeceğimi hissettiğim anlarda harika destek oldu!",
-      rating: 5
-    }
-  ];
+  const { testimonials } = useAuth();
 
   return (
     <section id="testimonials" className="py-20 relative bg-slate-50">
@@ -58,7 +22,7 @@ export default function TestimonialsSection() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((item) => (
+          {(testimonials || []).map((item) => (
             <div
               key={item.id}
               className="bg-white rounded-3xl p-6 border border-emerald-100 hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between shadow-md hover:shadow-xl"
@@ -88,7 +52,7 @@ export default function TestimonialsSection() {
 
                 {/* Star Rating */}
                 <div className="flex items-center space-x-1 mb-3">
-                  {Array.from({ length: item.rating }).map((_, i) => (
+                  {Array.from({ length: item.rating || 5 }).map((_, i) => (
                     <Star key={i} className="w-4 h-4 text-amber-500 fill-amber-500" />
                   ))}
                 </div>

@@ -196,6 +196,20 @@ export default function FloatingWidgets({ onOpenQuiz, onOpenAuth }) {
 
       {/* Floating Action Buttons Row */}
       <div className="flex items-center space-x-2">
+        {/* WhatsApp Direct Chat Button */}
+        <a
+          href="https://wa.me/905454726440"
+          target="_blank"
+          rel="noreferrer"
+          className="p-3 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white shadow-xl hover:scale-105 active:scale-95 transition-all group relative flex items-center justify-center border border-emerald-400"
+          title="WhatsApp İle İletişime Geçin (0545 472 64 40)"
+        >
+          <MessageCircle className="w-5 h-5 group-hover:rotate-12 transition-transform" />
+          <span className="absolute right-full mr-2 px-2.5 py-1 rounded-lg bg-slate-900 text-white text-[10px] font-bold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-white/10 shadow-md">
+            WhatsApp Hat (0545 472 64 40)
+          </span>
+        </a>
+
         {/* Quick Menu Toggle Button */}
         <button
           onClick={() => setIsQuickOpen(!isQuickOpen)}
